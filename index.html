@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CodinGame Prep</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <h1>CodinGame Prep</h1>
+  <input id="search" type="search" placeholder="Caută o problemă (ex: Temperatures)…" autocomplete="off" autofocus />
+  <div id="count" class="count"></div>
+</header>
+
+<main id="results"></main>
+
+<template id="row-template">
+  <li class="row">
+    <button class="row-head">
+      <span class="difficulty"></span>
+      <span class="title"></span>
+    </button>
+    <div class="detail" hidden>
+      <div class="tags"></div>
+      <div class="links"></div>
+      <a class="solve-btn" target="_blank" rel="noopener">Rezolvă cu Claude</a>
+    </div>
+  </li>
+</template>
+
+<script src="app.js"></script>
+</body>
+</html>
