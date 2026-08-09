@@ -77,7 +77,7 @@ async function main() {
 
     console.log(`Parsed ${deduped.length} puzzles:`, byDifficulty);
 
-    const outPath = path.join(__dirname, '..', 'data', 'puzzles.json');
+    const outPath = path.join(__dirname, '..', 'docs', 'data', 'puzzles.json');
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, JSON.stringify(deduped, null, 2));
     console.log(`Wrote ${outPath}`);
