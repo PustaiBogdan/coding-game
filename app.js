@@ -1,14 +1,15 @@
 // Editable any time — this is the exact prompt sent to Claude when you tap
 // "Rezolvă cu Claude". {{URL}} gets replaced with the puzzle's real CodinGame link.
-const PROMPT_TEMPLATE = `Rezolvă problema CodinGame de la acest link: {{URL}}
+const PROMPT_TEMPLATE = `Open and read this CodinGame puzzle page: {{URL}}
+Base your answer on the actual statement there, not just the title.
 
-Structurează răspunsul așa, mereu în limba română:
-1. Explică enunțul problemei și formatul inputului/outputului, pe scurt.
-2. Dă o soluție completă în Java care trece toate testele — corectă și clară, nu neapărat
-   super-optimizată, o soluție la care ar putea ajunge un om care rezolvă problema cu mintea
-   limpede, nu un cod ultra-compact sau plin de trucuri.
-3. La final, explică logica din spatele soluției — ce idee ai folosit și de ce, eventual cu
-   comentarii pe liniile mai puțin evidente din cod.`;
+Reply in English, kept tight (no filler):
+1. One short paragraph: what the puzzle asks, input/output format.
+2. A complete Java solution that passes all tests — correct and readable, the kind a person
+   would actually write, not a golfed one-liner. Use CodinGame's standard Java template
+   (Scanner-based input reading, class Solution with main).
+3. A few short bullet points on the core idea/approach. Add inline comments only on the
+   non-obvious lines of the code, not a comment on every line.`;
 
 /** @type {Array<{title:string, difficulty:string, codingameUrl:string, tags:string[], repoSolutionUrls:{lang:string,url:string}[]}>} */
 let puzzles = [];
