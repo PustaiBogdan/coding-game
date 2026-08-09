@@ -8,11 +8,20 @@ const PROMPT_WITH_STATEMENT = `CodinGame puzzle: {{TITLE}}
 {{STATEMENT}}
 --- End statement ---
 
+--- Input spec (CodinGame's own stub generator — this is exactly how their IDE parses
+input for this puzzle, match it precisely so the Scanner code lines up 1:1 with it) ---
+{{STUB}}
+--- End input spec ---
+Legend: "read x:int/string" = read one line, parse to that type. "loopline N x:type" =
+loop N times, one value per line. "loop N read a:t b:t" = loop N times, one line with
+multiple space-separated values. "gameloop" = repeat every turn until the game ends.
+
 Reply in English, kept tight (no filler):
 1. One short paragraph: what the puzzle asks, input/output format.
 2. A complete Java solution that passes all tests — correct and readable, the kind a person
    would actually write, not a golfed one-liner. Use CodinGame's standard Java template
-   (Scanner-based input reading, class Solution with main).
+   (Scanner-based input reading, class Solution with main), and read input in exactly the
+   order given in the input spec above.
 3. A few short bullet points on the core idea/approach. Add inline comments only on the
    non-obvious lines of the code, not a comment on every line.`;
 
@@ -121,7 +130,9 @@ function buildRow(puzzle) {
     }
 
     const prompt = puzzle.statementText
-        ? PROMPT_WITH_STATEMENT.replace('{{TITLE}}', puzzle.title).replace('{{STATEMENT}}', puzzle.statementText)
+        ? PROMPT_WITH_STATEMENT.replace('{{TITLE}}', puzzle.title)
+              .replace('{{STATEMENT}}', puzzle.statementText)
+              .replace('{{STUB}}', puzzle.stubGenerator || '(not available — infer the reading order from the statement)')
         : PROMPT_FALLBACK.replace('{{TITLE}}', puzzle.title).replace('{{URL}}', puzzle.codingameUrl);
     solveBtn.href = `https://claude.ai/new?q=${encodeURIComponent(prompt)}`;
 

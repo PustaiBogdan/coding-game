@@ -1,0 +1,27 @@
+{
+  "name": "codingame-prep",
+  "version": "1.0.0",
+  "description": "Index căutabil (client-side, fără backend) peste cele 300 de probleme din [HCABurns/CodinGame-Solutions](https://github.com/HCABurns/CodinGame-Solutions).",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PustaiBogdan/coding-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/PustaiBogdan/coding-game/issues"
+  },
+  "homepage": "https://github.com/PustaiBogdan/coding-game#readme",
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

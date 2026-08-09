@@ -7,6 +7,14 @@ const README_URL =
     'https://raw.githubusercontent.com/HCABurns/CodinGame-Solutions/main/README.md';
 const REPO_NAME_FIX = /github\.com\/HCABurns\/(Coding-Game-Solutions|CodinGame-Solutions)/g;
 
+// A couple of README rows link straight to /ide/puzzle/<slug>, which needs a live
+// session and can't be opened as a statement page. Verified real URLs via CodinGame's
+// own API (Puzzle/findProgressByPrettyId -> detailsPageUrl) and hardcoded the fix here.
+const BAD_URL_FIXES = {
+    'https://www.codingame.com/ide/puzzle/is-the-king-in-check-part-2':
+        'https://www.codingame.com/training/medium/is-the-king-in-check-part-2',
+};
+
 async function main() {
     const res = await fetch(README_URL);
     if (!res.ok) throw new Error(`README fetch failed: ${res.status}`);
@@ -41,7 +49,8 @@ async function main() {
 
         const title = titleMatch[1].trim();
         // A few README rows link to /discuss or /solution instead of the statement page itself.
-        const codingameUrl = titleMatch[2].trim().replace(/\/(discuss|solution)\/?$/, '');
+        let codingameUrl = titleMatch[2].trim().replace(/\/(discuss|solution)\/?$/, '');
+        codingameUrl = BAD_URL_FIXES[codingameUrl] || codingameUrl;
 
         const solutionLinkRe = /\[([^\]]+)\]\((https:\/\/github\.com[^)]*)\)/g;
         const repoSolutionUrls = [];
