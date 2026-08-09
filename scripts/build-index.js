@@ -40,7 +40,8 @@ async function main() {
         if (!titleMatch) continue; // e.g. rows where the puzzle link is missing entirely
 
         const title = titleMatch[1].trim();
-        const codingameUrl = titleMatch[2].trim();
+        // A few README rows link to /discuss or /solution instead of the statement page itself.
+        const codingameUrl = titleMatch[2].trim().replace(/\/(discuss|solution)\/?$/, '');
 
         const solutionLinkRe = /\[([^\]]+)\]\((https:\/\/github\.com[^)]*)\)/g;
         const repoSolutionUrls = [];

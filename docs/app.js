@@ -1,9 +1,28 @@
-// Editable any time — this is the exact prompt sent to Claude when you tap
-// "Rezolvă cu Claude". {{URL}} gets replaced with the puzzle's real CodinGame link.
-const PROMPT_TEMPLATE = `Open and read this CodinGame puzzle page: {{URL}}
-Base your answer on the actual statement there, not just the title.
+// Editable any time — these are the exact prompts sent to Claude when you tap
+// "Rezolvă cu Claude". CodinGame's puzzle pages are a JS app with no server-rendered
+// content, so Claude's own web-fetch can't read them — the statement is pre-extracted
+// (see scripts/fetch-statements.js) and embedded directly below instead of a link.
+const PROMPT_WITH_STATEMENT = `CodinGame puzzle: {{TITLE}}
+
+--- Statement ---
+{{STATEMENT}}
+--- End statement ---
 
 Reply in English, kept tight (no filler):
+1. One short paragraph: what the puzzle asks, input/output format.
+2. A complete Java solution that passes all tests — correct and readable, the kind a person
+   would actually write, not a golfed one-liner. Use CodinGame's standard Java template
+   (Scanner-based input reading, class Solution with main).
+3. A few short bullet points on the core idea/approach. Add inline comments only on the
+   non-obvious lines of the code, not a comment on every line.`;
+
+// Fallback for the rare puzzle whose statement we couldn't pre-extract — Claude's
+// web-fetch likely can't read the page either (client-rendered), so it's told that upfront.
+const PROMPT_FALLBACK = `CodinGame puzzle "{{TITLE}}": {{URL}}
+Note: this is a JS-rendered page, your fetch tool probably can't read the statement from it.
+If you can't read it, say so plainly instead of guessing from the title.
+
+If you can read it, reply in English, kept tight (no filler):
 1. One short paragraph: what the puzzle asks, input/output format.
 2. A complete Java solution that passes all tests — correct and readable, the kind a person
    would actually write, not a golfed one-liner. Use CodinGame's standard Java template
@@ -101,7 +120,9 @@ function buildRow(puzzle) {
         linksEl.appendChild(a);
     }
 
-    const prompt = PROMPT_TEMPLATE.replace('{{URL}}', puzzle.codingameUrl);
+    const prompt = puzzle.statementText
+        ? PROMPT_WITH_STATEMENT.replace('{{TITLE}}', puzzle.title).replace('{{STATEMENT}}', puzzle.statementText)
+        : PROMPT_FALLBACK.replace('{{TITLE}}', puzzle.title).replace('{{URL}}', puzzle.codingameUrl);
     solveBtn.href = `https://claude.ai/new?q=${encodeURIComponent(prompt)}`;
 
     head.addEventListener('click', () => {
