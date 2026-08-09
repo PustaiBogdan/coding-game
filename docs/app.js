@@ -16,14 +16,17 @@ Legend: "read x:int/string" = read one line, parse to that type. "loopline N x:t
 loop N times, one value per line. "loop N read a:t b:t" = loop N times, one line with
 multiple space-separated values. "gameloop" = repeat every turn until the game ends.
 
-Reply in English, kept tight (no filler):
-1. One short paragraph: what the puzzle asks, input/output format.
-2. A complete Java solution that passes all tests — correct and readable, the kind a person
+Reply in English, kept tight (no filler), in this exact order:
+1. Problem type: 1-2 lines naming the key data structures/techniques this needs and why
+   (e.g. "Needs a HashMap to count occurrences, because..."; "Needs a stack, because...").
+2. Approach: 2 sentences, thinking out loud like a person would before writing code —
+   how you're going to tackle it.
+3. A complete Java solution that passes all tests — correct and readable, the kind a person
    would actually write, not a golfed one-liner. Use CodinGame's standard Java template
    (Scanner-based input reading, class Solution with main), and read input in exactly the
-   order given in the input spec above.
-3. A few short bullet points on the core idea/approach. Add inline comments only on the
-   non-obvious lines of the code, not a comment on every line.`;
+   order given in the input spec above. Add concise inline comments only on the important/
+   non-obvious lines, not a comment on every line.
+4. Explanation: below the code, a slightly more detailed walkthrough of the logic.`;
 
 // Fallback for the rare puzzle whose statement we couldn't pre-extract — Claude's
 // web-fetch likely can't read the page either (client-rendered), so it's told that upfront.
@@ -31,13 +34,14 @@ const PROMPT_FALLBACK = `CodinGame puzzle "{{TITLE}}": {{URL}}
 Note: this is a JS-rendered page, your fetch tool probably can't read the statement from it.
 If you can't read it, say so plainly instead of guessing from the title.
 
-If you can read it, reply in English, kept tight (no filler):
-1. One short paragraph: what the puzzle asks, input/output format.
-2. A complete Java solution that passes all tests — correct and readable, the kind a person
+If you can read it, reply in English, kept tight (no filler), in this exact order:
+1. Problem type: 1-2 lines naming the key data structures/techniques this needs and why.
+2. Approach: 2 sentences, thinking out loud like a person would before writing code.
+3. A complete Java solution that passes all tests — correct and readable, the kind a person
    would actually write, not a golfed one-liner. Use CodinGame's standard Java template
-   (Scanner-based input reading, class Solution with main).
-3. A few short bullet points on the core idea/approach. Add inline comments only on the
-   non-obvious lines of the code, not a comment on every line.`;
+   (Scanner-based input reading, class Solution with main). Add concise inline comments only
+   on the important/non-obvious lines, not a comment on every line.
+4. Explanation: below the code, a slightly more detailed walkthrough of the logic.`;
 
 /** @type {Array<{title:string, difficulty:string, codingameUrl:string, tags:string[], repoSolutionUrls:{lang:string,url:string}[]}>} */
 let puzzles = [];
